@@ -14,7 +14,7 @@ from django.shortcuts import redirect
 class SignupView(CreateView):
     form_class = UserCreationForm
     template_name = 'home/register.html'
-    success_url = '/smart/notes'
+    success_url = 'login'
     
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
@@ -23,7 +23,6 @@ class SignupView(CreateView):
 
 class LogoutInterfaceView(LogoutView):
     template_name = 'home/logout.html'
-    success_url = 'login'
 
     def dispatch(self, request, *args, **kwargs):
         # If it's a POST request, delegate to parent class (LogoutView)
@@ -34,7 +33,7 @@ class LogoutInterfaceView(LogoutView):
             # Perform logout action
             logout(request)
             # Redirect to the login page
-            return HttpResponseRedirect(reverse('login'))
+            return HttpResponseRedirect(reverse('home'))
 
 class LoginInterfaceView(LoginView):
     template_name = 'home/login.html'
